@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://Showza-dev-env.eba-c3h2hppu.ap-south-1.elasticbeanstalk.com';
+// In production the app is served over HTTPS, so calling the HTTP backend directly is
+// blocked as mixed content. Use same-origin relative URLs there; vercel.json rewrites
+// /api/* to the backend. In dev, call the backend directly.
+export const API_BASE_URL = import.meta.env.DEV
+  ? import.meta.env.VITE_API_BASE_URL || 'http://Showza-dev-env.eba-c3h2hppu.ap-south-1.elasticbeanstalk.com'
+  : '';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
